@@ -1,0 +1,38 @@
+/* styles.css */
+.root {
+    -fx-padding: 20;
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-background-color: #f0f4f8;
+}
+
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-font-size: 14px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.button.exit {
+    -fx-background-color: #dc3545; /* Красный цвет */
+}
+
+.button.exit:hover {
+    -fx-background-color: #c82333;
+}
+
+.label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #333;
+}
+
+.text-area {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14px;
+}
