@@ -84,6 +84,7 @@ public class EncodingService {
     // Декодирование с использованием кода Хэмминга
     private static String decodeHamming(String encodedStr) {
         StringBuilder decodedMessage = new StringBuilder();
+        int blockCount = 0;
 
         // Удаление всех пробелов
         encodedStr = encodedStr.replaceAll("\\s+", "");
@@ -91,15 +92,16 @@ public class EncodingService {
         // Разбиение закодированной строки на блоки по 7 символов
         for (int i = 0; i < encodedStr.length(); i += 7) {
             String block = encodedStr.substring(i, Math.min(i + 7, encodedStr.length()));
-            String decodedBlock = decodeHammingBlock(block);
+            String decodedBlock = decodeHammingBlock(block, blockCount + 1);
             decodedMessage.append(decodedBlock);
+            blockCount++;
         }
 
         return decodedMessage.toString();
     }
 
     // Декодирование одного блока Хэмминга
-    private static String decodeHammingBlock(String block) {
+    private static String decodeHammingBlock(String block, int blockNumber) {
         // Определение позиций битов r1, r2 и r4
         char[] encodedBlock = block.toCharArray();
         int errorPosition = 0;
@@ -118,7 +120,7 @@ public class EncodingService {
         if (errorPosition > 0) {
             int errorIndex = errorPosition - 1;
             encodedBlock[errorIndex] = encodedBlock[errorIndex] == '0' ? '1' : '0'; // Инвертирование ошибочного бита
-            AlertUtils.showErrorAlert("Ошибка", "Был исправлен ошибочный бит с индексом " + errorIndex + " в позиции r" + errorPosition);
+            AlertUtils.showErrorAlert("Ошибка", "Был исправлен ошибочный бит с индексом " + errorIndex + " в блоке " + blockNumber);
         }
 
         // Извлечение данных (биты на позициях 2, 4, 5 и 6)
@@ -127,7 +129,6 @@ public class EncodingService {
         decodedBlock.append(encodedBlock[4]);
         decodedBlock.append(encodedBlock[5]);
         decodedBlock.append(encodedBlock[6]);
-
         return decodedBlock.toString();
     }
 
